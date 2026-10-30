@@ -14,16 +14,7 @@ Trò chơi tiệc tùng (party game) offline chuyền điện thoại siêu nh�
 - **Gián Điệp (Kền kền)**: Nhận từ gần nghĩa (hơi khác Dân một chút). Thắng nếu sống sót đến cuối ván.
 - **Kẻ Nói Dối**: Biết từ bí mật nhưng chỉ thắng (+3 điểm) nếu bị cả nhóm bỏ phiếu loại!
 
-## 🚀 Khởi chạy ứng dụng
-Chỉ cần mở trực tiếp file `index.html` trên bất kỳ trình duyệt nào (Chrome, Edge, Safari, Firefox), hoặc chạy lệnh PowerShell:
-```powershell
-Start-Process "index.html"
-```
-Hoặc khởi chạy máy chủ nội bộ qua file `server.ps1`:
-```powershell
-powershell -ExecutionPolicy Bypass -File "server.ps1"
-```
-Truy cập tại: `http://localhost:8080/`
+
 
 ## 📦 Nội dung kho từ
 - Tích hợp sẵn **488 cặp từ tiếng Việt** chia theo 14 chủ đề phong phú: Đồ ăn, Động vật, Nơi chốn, Vật dụng, Nghề & đời sống, Thiên nhiên, Giải trí, Người nổi tiếng, Ứng dụng, Đồ uống, Thể thao, Trò chơi, Sự kiện & lễ, Thương hiệu.

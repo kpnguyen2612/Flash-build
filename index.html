@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kẻ Giả Mạo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+:root{--bg:#1c1033;--bg2:#2d1856;--card:#38225f;--card2:#44297a;--ink:#fff6e5;--mut:#bfaee3;--acc:#ffcf3f;--civ:#5eead4;--bad:#ff6f61;--spy:#7cc4ff;--liar:#c8a6ff;--line:rgba(255,255,255,.1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:inherit;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(1200px 600px at 50% -10%,var(--bg2),var(--bg) 70%) fixed;color:var(--ink);font-family:"Nunito","Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.45;display:flex;justify-content:center}
+main{width:100%;max-width:460px;padding:22px 18px 26px;display:flex;flex-direction:column;gap:16px;min-height:100%}
+h1,.word,.timer,.big,.chip,b{font-family:"Baloo 2","Nunito",system-ui,sans-serif}
+h1{font-size:38px;margin:6px 0 0;line-height:1;letter-spacing:-.5px}
+h1 span{color:var(--acc)}
+p.s{margin:0;color:var(--mut);font-size:14.5px}
+.hd{display:flex;align-items:center;justify-content:space-between;margin:2px 2px -4px;color:var(--mut);font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.hd button{background:none;color:var(--acc);font-size:13px;font-weight:800;padding:4px 6px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px;min-height:56px}
+.row b{font-size:16px;font-weight:600}
+.row small{display:block;color:var(--mut);font-weight:600;font-size:12.5px}
+.step{display:flex;align-items:center;gap:12px}
+.step button{width:44px;height:44px;border-radius:50%;font-size:22px;background:var(--card2);color:var(--ink);border:1px solid var(--line)}
+.step button:active{transform:scale(.92)}
+.step span{min-width:26px;text-align:center;font-size:24px;font-weight:800;font-family:"Baloo 2",sans-serif}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 14px;border-radius:999px;background:var(--card);color:var(--mut);border:1.5px solid var(--line);font-size:14.5px;font-weight:600;min-height:44px}
+.chip.on{background:rgba(255,207,63,.14);border-color:var(--acc);color:var(--acc)}
+.chip i{font-style:normal;opacity:.6;font-size:12px;margin-left:4px}
+button{font:inherit;cursor:pointer;border:0;transition:transform .12s ease,filter .12s ease}
+button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.big{width:100%;padding:16px;border-radius:18px;background:var(--acc);color:#2a1750;font-size:19px;font-weight:700;box-shadow:0 5px 0 #c99a12,0 12px 24px rgba(0,0,0,.28)}
+.big:active{transform:translateY(3px);box-shadow:0 2px 0 #c99a12}
+.big.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.big.ghost:active{background:var(--card)}
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--card2)}
+.dots i.d{background:var(--civ)}
+.dots i.c{background:var(--acc);box-shadow:0 0 0 4px rgba(255,207,63,.25)}
+.cardbox{width:100%;aspect-ratio:4/3;border-radius:28px;background:linear-gradient(160deg,var(--card2),var(--card));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;padding:18px;color:var(--ink);font-size:17px;font-weight:700;border:2px dashed var(--mut)}
+.cardbox.open{border:2px solid var(--civ);box-shadow:0 0 40px rgba(94,234,212,.28);animation:pop .35s ease}
+.cardbox.imp{border-color:var(--bad);box-shadow:0 0 40px rgba(255,111,97,.32)}
+@keyframes pop{0%{transform:rotateY(80deg) scale(.9);opacity:.3}100%{transform:none;opacity:1}}
+.word{font-size:42px;font-weight:800;color:var(--civ);line-height:1.05}
+.imp .word{color:var(--bad)}
+.timer{font-size:72px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--acc)}
+.timer.low{color:var(--bad)}
+.names{display:flex;flex-direction:column;gap:8px;width:100%}
+.names .chip{width:100%;text-align:left;font-size:17px;color:var(--ink);background:var(--card)}
+.names .chip:active{border-color:var(--acc)}
+.names .row{text-align:left}
+.names .row span:last-child{text-align:right}
+.r0{border-left:5px solid var(--civ)}
+.r1{border-left:5px solid var(--bad);background:rgba(255,111,97,.16)}
+.r2{border-left:5px solid var(--spy)}
+.r3{border-left:5px solid var(--liar)}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px;color:var(--mut);font-size:14px;line-height:1.6}
+details summary{cursor:pointer;font-weight:800;color:var(--ink)}
+.hide{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const W={
+"Đồ ăn":[["phở","hủ tiếu"],["bánh mì","bánh bao"],["bún chả","bún thịt nướng"],["cơm tấm","cơm trộn"],["bánh xèo","bánh pía"],["hủ tiếu","mì quảng"],["chè","cháo"],["nem chua","chả giò"],["bún bò","bún riêu"],["phở cuốn","bánh xèo"],["xôi","nếp cẩm"],["cháo lòng","cháo sườn"],["bánh cuốn","bánh xèo"],["lẩu","nướng"],["bánh chưng","bánh tét"],["bún riêu","bún mọc"],["mì quảng","cao lầu"],["cơm chiên","mì xào"],["bánh flan","kem"],["bún đậu","bánh tráng trộn"],["bánh tráng nướng","bánh tráng cuốn"],["ốc","sò"],["thịt kho","cá kho"],["canh chua","canh khổ qua"],["chả cá","chả lụa"],["xúc xích","lạp xưởng"],["bánh bèo","bánh nậm"],["bún mắm","bún cá"],["bánh canh","hủ tiếu"],["trứng vịt lộn","trứng cút"],["kem","đá bào"],["sữa chua","phô mai"],["bánh bao","bánh gối"],["mực nướng","gà nướng"],["bánh đúc","bánh giò"],["bánh rán","bánh xèo"],["bún thang","bún ốc"],["miến gà","miến lươn"],["xôi gà","xôi xéo"],["cháo","súp"],["gà rán","thịt nướng"],["pizza","bánh mì kẹp"],["hamburger","sandwich"],["mì tôm","phở"],["sầu riêng","mít"],["bánh bột lọc","bánh ít"],["cơm cháy","cơm lam"],["nem nướng","chả ram"],["gỏi","salad"],["bánh kẹp","waffle"],["kem que","kem ốc quế"],["bún cá","bún sứa"],["phở bò","phở gà"],["bánh tráng trộn","bánh tráng nướng"],["gà rán","gà quay"],["mì cay","lẩu Thái"]],
+"Động vật":[["chó","bò"],["mèo","hổ"],["voi","tê giác"],["khỉ","vượn"],["rùa","ba ba"],["ếch","cóc"],["gà","vịt"],["chó","sói"],["hổ","báo"],["cua","ghẹ"],["ong","ruồi"],["dơi","chim"],["nhím","chuột"],["bò","bê"],["vịt","ngỗng"],["heo","dê"],["dê","cừu"],["ngựa","lừa"],["cá heo","cá voi"],["cá chép","cá rô"],["gấu","gấu trúc"],["thỏ","sóc"],["rắn","thằn lằn"],["bướm","chuồn chuồn"],["kiến","mối"],["muỗi","ruồi"],["công","gà tây"],["cú","đại bàng"],["sư tử","báo"],["cá mập","cá đuối"],["cá vàng","cá cảnh"],["ngỗng","thiên nga"],["nhện","sâu"],["cừu","lạc đà"],["lạc đà","ngựa vằn"],["bồ câu","chim sẻ"],["khỉ đột","đười ươi"],["dế","châu chấu"],["tắc kè","thạch sùng"],["cá thu","cá ngừ"],["cáo","chó rừng"],["hươu","nai"],["sứa","mực"],["bạch tuộc","mực"],["chim én","chim yến"],["vẹt","chim sáo"],["tằm","sâu bướm"],["hến","sò"],["sóc","chồn"],["cá sấu","kỳ đà"],["đại bàng","diều hâu"],["ngựa vằn","hươu cao cổ"],["gấu bắc cực","gấu nâu"],["chó béc giê","chó săn"],["mèo Ba Tư","mèo Anh"],["cá koi","cá chép"],["sâu róm","sâu bướm"],["cá bống","cá trê"]],
+"Nơi chốn":[["Hà Nội","Huế"],["Sài Gòn","Đà Nẵng"],["Đà Lạt","Sapa"],["Phú Quốc","Côn Đảo"],["Hội An","Hà Nội"],["Sapa","Mộc Châu"],["chợ Bến Thành","chợ Đồng Xuân"],["Hồ Gươm","Hồ Tây"],["Huế","Đà Nẵng"],["Nha Trang","Vũng Tàu"],["Cần Thơ","Cà Mau"],["Mũi Né","Phan Thiết"],["bệnh viện","phòng khám"],["sân bay","ga tàu"],["Đà Nẵng","Quy Nhơn"],["Hải Phòng","Quảng Ninh"],["Ninh Bình","Hà Giang"],["Dinh Độc Lập","Nhà thờ Đức Bà"],["Lăng Bác","Văn Miếu"],["siêu thị","chợ"],["công viên","vườn thú"],["thư viện","nhà sách"],["rạp chiếu phim","nhà hát"],["bãi biển","hồ bơi"],["chùa","nhà thờ"],["trường học","đại học"],["quán nhậu","quán cà phê"],["chung cư","nhà phố"],["bến xe","bến tàu"],["Quy Nhơn","Phú Yên"],["Cát Bà","Lý Sơn"],["Mộc Châu","Ba Vì"],["Tràng An","Bái Đính"],["Địa đạo Củ Chi","Địa đạo Vịnh Mốc"],["nhà thờ","thánh đường"],["sân vận động","nhà thi đấu"],["ngân hàng","bưu điện"],["khách sạn","nhà nghỉ"],["mall","chợ đêm"],["Tam Đảo","Ba Vì"],["Mù Cang Chải","Mộc Châu"],["Phong Nha","Tràng An"],["Bà Nà Hills","Sun World"],["Cầu Rồng","Cầu Vàng"],["Bãi Sao","Bãi Dài"],["Vũng Tàu","Long Hải"],["nhà hàng","quán ăn"],["home stay","quán net"],["phòng gym","phòng yoga"],["tiệm cắt tóc","tiệm nail"],["công ty","văn phòng"],["nhà máy","xưởng"],["Buôn Ma Thuột","Pleiku"],["Cà Mau","Bạc Liêu"],["Bến Tre","Tiền Giang"],["Vinpearl","Sun World"],["Landmark 81","Bitexco"],["Nhà hát Lớn","Nhà hát Thành phố"],["trường mầm non","trường tiểu học"],["quán trà sữa","quán kem"],["chợ nổi","chợ đêm"],["sân golf","sân tennis"],["Lotte","Takashimaya"],["Aeon","Vincom"],["Winmart","Bách Hóa Xanh"],["Ga Sài Gòn","Ga Hà Nội"],["Nội Bài","Tân Sơn Nhất"],["phố đi bộ Nguyễn Huệ","phố đi bộ Hồ Gươm"],["Cầu Long Biên","Cầu Thăng Long"],["Nhà thờ Đức Bà","Nhà thờ Lớn Hà Nội"],["Suối Tiên","Đầm Sen"],["Đại Nội Huế","Hoàng thành Thăng Long"]],
+"Vật dụng":[["nón lá","mũ bảo hiểm"],["xe máy","xe đạp"],["dép tông","giày sandal"],["quạt","máy lạnh"],["tủ lạnh","tủ đông"],["bàn ủi","máy sấy tóc"],["ô dù","áo mưa"],["gối ôm","gối nằm"],["điều khiển","chuột máy tính"],["nồi cơm điện","nồi áp suất"],["cây chổi","cây lau nhà"],["kính râm","kính cận"],["bật lửa","diêm"],["ổ khóa","chìa khóa"],["gương","cửa kính"],["điện thoại","máy tính bảng"],["laptop","máy tính để bàn"],["tai nghe","loa"],["bàn chải","lược"],["kem đánh răng","xà phòng"],["khăn tắm","khăn mặt"],["máy giặt","máy rửa chén"],["lò vi sóng","lò nướng"],["ghế sofa","ghế đẩu"],["đồng hồ","vòng tay"],["ví","túi xách"],["ba lô","vali"],["bút bi","bút chì"],["kéo","dao"],["đèn pin","đèn bàn"],["bàn phím","chuột"],["máy ảnh","máy quay"],["sạc dự phòng","sạc pin"],["nồi chiên không dầu","lò nướng điện"],["ấm đun nước","bình thủy"],["muỗng","đũa"],["thớt","dao thớt"],["khẩu trang","khăn che mặt"],["dây chuyền","nhẫn"],["mũ lưỡi trai","mũ len"],["chảo","nồi"],["đũa","nĩa"],["ly","cốc"],["chai","lọ"],["thùng rác","tủ đồ"],["búa","cưa"],["tua vít","kìm"],["bóng đèn","đèn ống"],["ổ cắm","phích cắm"],["điều hòa","quạt trần"],["son môi","phấn má"],["nước hoa","nến thơm"],["ô tô","xe tải"],["tivi","màn hình"],["bình giữ nhiệt","bình nước"],["túi nilon","túi giấy"],["găng tay","khăn quàng"],["áo khoác","áo len"],["giày thể thao","giày da"],["dép lê","dép sandal"],["bàn học","bàn làm việc"],["ghế gỗ","ghế nhựa"],["nệm","giường"]],
+"Nghề & đời sống":[["bác sĩ","y tá"],["shipper","tài xế"],["giáo viên","giảng viên"],["ca sĩ","nhạc sĩ"],["công an","bộ đội"],["đầu bếp","thợ làm bánh"],["thợ cắt tóc","thợ làm nail"],["nhà báo","biên tập viên"],["kỹ sư","kiến trúc sư"],["luật sư","thẩm phán"],["nông dân","ngư dân"],["tài xế taxi","xe ôm"],["streamer","youtuber"],["vận động viên","huấn luyện viên"],["diễn viên","người mẫu"],["họa sĩ","nhiếp ảnh gia"],["phi công","tiếp viên hàng không"],["lính cứu hỏa","cảnh sát giao thông"],["đi chợ","đi siêu thị"],["ngủ trưa","ngủ đêm"],["nhà văn","nhà thơ"],["thợ may","thợ thêu"],["nha sĩ","dược sĩ"],["kế toán","thủ quỹ"],["lập trình viên","kỹ sư phần mềm"],["thợ điện","thợ nước"],["bảo vệ","tạp vụ"],["MC","diễn giả"],["tăng ca","trực đêm"],["sinh viên","học sinh"],["thợ xây","thợ mộc"],["thợ sửa xe","thợ sửa điện thoại"],["giám đốc","trưởng phòng"],["thư ký","trợ lý"],["nhà đầu tư","nhà môi giới"],["y tá","hộ lý"],["phiên dịch","biên dịch"],["thầy bói","thầy phong thủy"],["nghỉ phép","nghỉ ốm"],["kẹt xe","ngập nước"],["đi làm","đi học"],["ăn tối","ăn trưa"],["bán hàng online","bán hàng chợ"],["ở trọ","ở ký túc xá"],["thầy giáo","cô giáo"],["nhân viên văn phòng","nhân viên bán hàng"],["trưởng nhóm","quản lý"],["thực tập sinh","nhân viên mới"],["làm thêm","làm tự do"],["đi công tác","đi du lịch"],["ăn sáng","ăn vặt"],["chạy deadline","họp online"],["tăng lương","thưởng Tết"],["ngủ nướng","thức khuya"]],
+"Thiên nhiên":[["mưa","sương mù"],["sấm","sét"],["núi","đồi"],["sông","suối"],["biển","hồ"],["rừng","vườn"],["hoa sen","hoa súng"],["hoa mai","hoa đào"],["cây dừa","cây cau"],["tre","liễu"],["mặt trăng","ngôi sao"],["cầu vồng","ráng chiều"],["san hô","rong biển"],["thác nước","hang động"],["bão","lốc xoáy"],["tuyết","mưa đá"],["sa mạc","thảo nguyên"],["đảo","bán đảo"],["nắng","nóng bức"],["hoa hồng","hoa cúc"],["cây đa","cây bàng"],["cỏ","rêu"],["ao","đầm"],["lúa","ngô"],["bình minh","hoàng hôn"],["lũ","sóng thần"],["mưa phùn","mưa rào"],["mặt trời","ngôi sao"],["mây","khói"],["cát","đất"],["bùn","đất sét"],["hoa cúc","hoa cải"],["hoa hướng dương","hoa cúc dại"],["cây thông","cây tùng"],["cây mía","cây ngô"],["hoa phượng","hoa bằng lăng"],["đồi","gò"],["thung lũng","đồng bằng"],["đồng bằng","cao nguyên"],["hồ","đầm lầy"],["suối","khe nước"],["sương","hơi nước"],["núi lửa","động đất"],["đom đóm","ve sầu"],["sương giá","tuyết"],["cây chuối","cây dừa"],["hoa lan","hoa hồng"],["hoa ly","hoa loa kèn"],["hoa giấy","hoa phượng"],["cây xương rồng","cây lưỡi hổ"],["rừng ngập mặn","rừng tràm"],["dòng sông","con kênh"],["đồi chè","đồi thông"]],
+"Giải trí":[["phim kinh dị","phim hài"],["câu cá","bắt cá"],["chụp ảnh","quay phim"],["ghi-ta","đàn piano"],["đàn bầu","đàn tranh"],["xem phim","nghe nhạc"],["cắm trại","picnic"],["concert","festival"],["phim hành động","phim tình cảm"],["nhạc rap","nhạc ballad"],["karaoke","massage"],["karaoke","quán bar"],["Doraemon","Conan"],["Marvel","DC"],["đọc sách","đọc truyện"],["cải lương","chèo"],["Tây Du Ký","Tam Quốc"],["Tom và Jerry","Mickey"],["Thạch Sanh","Tấm Cám"]],
+"Người nổi tiếng":[["Trấn Thành","Trường Giang"],["Jack (J97)","Sơn Tùng M-TP"],["Đen Vâu","Binz"],["Mỹ Tâm","Hồ Ngọc Hà"],["Hương Giang","Chi Pu"],["Quang Hải","Công Phượng"],["Độ Mixi","ViruSs"],["Karik","Wowy"],["Tóc Tiên","Min"],["Hoài Linh","Việt Hương"],["Lệ Quyên","Đàm Vĩnh Hưng"],["Sơn Tùng M-TP","Soobin"],["Messi","Ronaldo"],["Taylor Swift","Billie Eilish"],["Phương Hữu Dưỡng (PHD)","Nguyễn Thành Nam (NTN)"],["Big Bang","HKT"],["Neymar","Mbappé"],["Elon Musk","Bill Gates"]],
+"Ứng dụng":[["Zalopay","MoMo"],["Grab","Be"],["Shopee","Lazada"],["Zalo","Messenger"],["Discord","Zoom"],["TikTok","Facebook"],["YouTube","Netflix"],["Netflix","HBO"],["podcast","radio"],["livestream","quay TikTok"],["Spotify","Zing MP3"],["Instagram","Pinterest"],["Chrome","Safari"]],
+"Đồ uống":[["trà sữa","cà phê"],["sinh tố","nước ép"],["cà phê muối","cà phê trứng"],["nước mía","nước dừa"],["trà đào","trà vải"],["trà chanh","trà tắc"],["cà phê đen","cà phê nâu"],["sữa đậu nành","sữa bò"],["Highlands","Phúc Long"],["trà đá","nước mía"],["matcha","chè Thái Nguyên"],["nước cam","nước chanh"],["cà phê phin","cà phê pha máy"],["sữa tươi","sữa đặc"],["nước sâm","nước rau má"],["trà gừng","trà hoa cúc"],["rượu vang","bia"]],
+"Thể thao":[["bóng chuyền","cầu lông"],["cầu lông","tennis"],["tennis","bóng bàn"],["golf","pickleball"],["bơi lội","lặn"],["đạp xe","chạy bộ"],["tập gym","chạy bộ"],["yoga","pilates"],["leo núi","đi bộ đường dài"],["đá cầu","cầu mây"],["đua xe","đua ngựa"],["trượt ván","trượt patin"],["bóng rổ","bóng ném"],["bóng đá","futsal"],["xem bóng đá","xem bóng rổ"],["bi a","bowling"],["bơi lội","chạy bộ"],["lướt sóng","lặn biển"],["cử tạ","thể hình"],["SEA Games","Olympic"],["World Cup","Euro"]],
+"Trò chơi":[["Liên Quân","PUBG"],["Valorant","CS2"],["Valorant","PUBG"],["Among Us","Ma sói"],["Uno","cờ tỷ phú"],["cờ vua","cờ vây"],["cờ tướng","cờ caro"],["cờ vây","cờ caro"],["rubik","xếp hình"],["bài tây","mạt chược"],["trốn tìm","bịt mắt bắt dê"],["cờ tỷ phú","cờ cá ngựa"],["tiến lên","phỏm"],["Flappy Bird","Candy Crush"]],
+"Sự kiện và lễ":[["Tết","Trung thu"],["đám cưới","đám hỏi"],["sinh nhật","tiệc tất niên"],["lì xì","tiền mừng"],["họp lớp","họp phụ huynh"],["Valentine","8/3"],["Trung thu","Giáng sinh"],["khai trương","tân gia"],["tốt nghiệp","khai giảng"],["liên hoan","tiệc nướng"],["countdown","pháo hoa"],["Quốc khánh","Giỗ Tổ Hùng Vương"],["Tết Nguyên Đán","Tết Dương lịch"],["thôi nôi","đầy tháng"],["hội chợ","triển lãm"],["Halloween","Noel"],["Thần Tài","Thổ Địa"]],
+"Thương hiệu":[["KFC","Lotteria"],["iPhone","Samsung"],["Vespa","Yamaha"],["Vinamilk","TH True Milk"],["Biti's","Thượng Đình"],["Vinfast","Hyundai"],["Nike","Adidas"],["Toyota","Honda"],["Viettel","Vinaphone"],["Vietcombank","BIDV"],["Thế Giới Di Động","FPT Shop"],["Pizza Hut","Domino's"],["Starbucks","The Coffee House"]]
+};
+const S={n:5,imp:1,spy:0,liar:0,cats:new Set(Object.keys(W)),hint:true};
+const app=document.getElementById('app');
+let G=null,tick=null;
+const keyOf=(c,p)=>c+'|'+p[0]+'|'+p[1];
+const KEY='imposter_used_v1';
+let USED=new Set();
+try{USED=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+function saveUsed(){try{localStorage.setItem(KEY,JSON.stringify([...USED]))}catch(e){}}
+function poolAll(){const a=[];[...S.cats].forEach(c=>W[c].forEach(p=>a.push([c,p])));return a}
+function poolInfo(){const a=poolAll(),left=a.filter(([c,p])=>!USED.has(keyOf(c,p))).length;return `<div class="row"><p class="s" style="margin:0">Còn ${left}/${a.length} cặp chưa chơi</p><button class="chip" onclick="USED.clear();saveUsed();setup()">Làm mới</button></div>`}
+const $=(h)=>{app.innerHTML=h};
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+
+function setup(){
+ clearInterval(tick);
+ $(`<div><h1>Kẻ Giả <span>Mạo</span></h1><p class="s">Chuyền điện thoại, ai cũng biết từ bí mật — trừ kẻ giả mạo.</p></div>
+ <div class="row"><b>Số người chơi</b><div class="step"><button aria-label="giảm" onclick="ch('n',-1)">−</button><span>${S.n}</span><button aria-label="tăng" onclick="ch('n',1)">+</button></div></div>
+ <div class="row"><b>Số kẻ giả mạo</b><div class="step"><button aria-label="giảm" onclick="ch('imp',-1)">−</button><span>${S.imp}</span><button aria-label="tăng" onclick="ch('imp',1)">+</button></div></div>
+ <div class="row"><b>Số gián điệp (kền kền: sống đến cuối)</b><div class="step"><button aria-label="giảm" onclick="ch('spy',-1)">−</button><span>${S.spy}</span><button aria-label="tăng" onclick="ch('spy',1)">+</button></div></div>
+ <div class="row"><b>Số kẻ nói dối (biết từ, thắng nếu bị loại)</b><div class="step"><button aria-label="giảm" onclick="ch('liar',-1)">−</button><span>${S.liar}</span><button aria-label="tăng" onclick="ch('liar',1)">+</button></div></div>
+ <div class="row"><b>Cho kẻ giả mạo biết chủ đề</b><button class="chip ${S.hint?'on':''}" onclick="S.hint=!S.hint;setup()">${S.hint?'Có':'Không'}</button></div>
+ <div style="display:flex;flex-direction:column;gap:10px"><div class="hd"><span>Chủ đề</span><span><button onclick="allc(1)">Tất cả</button><button onclick="allc(0)">Bỏ hết</button></span></div><div class="chips">${Object.keys(W).map(c=>`<button class="chip ${S.cats.has(c)?'on':''}" onclick="tg('${c}')">${c}<i>${W[c].length}</i></button>`).join('')}</div></div>
+ <details style="color:var(--mut);font-size:14px;line-height:1.6"><summary>Luật tính điểm</summary>Loại dần: mỗi vòng nhóm loại 1 người, đến khi hết kẻ giả mạo hoặc kẻ giả mạo ≥ số người còn lại.<br>• Phe dân thắng: dân thường +2 (cả người đã bị loại).<br>• Kẻ giả mạo thắng: mỗi kẻ giả mạo còn sống +3.<br>• Gián điệp (kền kền): +3 nếu còn sống khi ván kết thúc, dù phe nào thắng.<br>• Kẻ nói dối: +3 nếu bị loại.<br>• Kẻ giả mạo bị loại mà đoán đúng từ: +2.<br>Điểm cộng dồn qua các ván.</details>
+ ${poolInfo()}
+ <div style="flex:1"></div>
+ <button class="big" onclick="start()">Bắt đầu</button>`);
+}
+function ch(k,d){
+ S[k]=Math.max(k==='n'?3:k==='imp'?1:0,Math.min(k==='n'?15:S.n-1,S[k]+d));
+ while(S.imp+S.spy+S.liar>=S.n){if(k!=='n'&&S[k]>(k==='imp'?1:0))S[k]--;else if(S.spy>0)S.spy--;else if(S.liar>0)S.liar--;else S.imp--}
+ setup();
+}
+function allc(on){S.cats=new Set(on?Object.keys(W):[Object.keys(W)[0]]);setup()}
+function tg(c){S.cats.has(c)?S.cats.size>1&&S.cats.delete(c):S.cats.add(c);setup()}
+function start(){
+ const all=poolAll();let av=all.filter(([c,p])=>!USED.has(keyOf(c,p)));
+ if(!av.length){all.forEach(([c,p])=>USED.delete(keyOf(c,p)));av=all}
+ const [cat,pr]=rnd(av);USED.add(keyOf(cat,pr));saveUsed();const word=pr[0];
+ const roles=Array(S.n).fill(0);let k=0;
+ while(k<S.imp){const i=Math.floor(Math.random()*S.n);if(!roles[i]){roles[i]=1;k++}}
+ k=0;
+ while(k<S.spy){const i=Math.floor(Math.random()*S.n);if(!roles[i]){roles[i]=2;k++}}
+ k=0;
+ while(k<S.liar){const i=Math.floor(Math.random()*S.n);if(!roles[i]){roles[i]=3;k++}}
+ const sy=pr[1],sw=Math.random()<.5;
+ G={cat,word:sw?sy:word,syn:sw?word:sy,roles,alive:Array(S.n).fill(true),got:Array(S.n).fill(0),i:0,open:false,first:Math.floor(Math.random()*S.n)};
+ reveal();
+}
+function reveal(){
+ const p=G.i,imp=G.roles[p]===1,o=G.open;
+ $(`<div class="stage">
+  <div class="dots">${G.roles.map((_,i)=>`<i class="${i<p?'d':i===p?'c':''}"></i>`).join('')}</div><p class="s">Người chơi ${p+1} / ${S.n}</p>
+  <button class="cardbox ${o?'open':''} ${o&&imp?'imp':''}" onclick="flip()" aria-live="polite">
+   ${o?(imp?`<div class="word">Bạn là kẻ giả mạo</div><p class="s">${S.hint?'Chủ đề: '+G.cat:'Hãy nghe và đoán từ bí mật'}</p>`
+         :`<p class="s">${G.roles[p]===3?'Bạn là kẻ nói dối: bạn thắng nếu bị loại. Từ bí mật':'Từ bí mật'}</p><div class="word">${G.roles[p]===2?G.syn:G.word}</div>`):'Chạm để xem vai của bạn'}
+  </button>
+  ${o?'<button class="big" onclick="nextP()">Đã xem, chuyền tiếp</button>':'<p class="s">Đảm bảo chỉ mình bạn nhìn màn hình</p>'}
+ </div>`);
+}
+function flip(){G.open=!G.open;try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}reveal()}
+function nextP(){
+ G.open=false;G.i++;
+ G.i>=S.n?discuss():reveal();
+}
+function discuss(){
+ if(G.t===undefined)G.t=S.n*60;
+ G.paused=false;
+ const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+ function renderTimerUI(){
+  $(`<div class="stage">
+   <p class="s">Người ${G.first+1} nói trước. Mỗi người mô tả từ bằng một câu, rồi bỏ phiếu.</p>
+   <div class="timer" id="t" onclick="togglePause()" style="cursor:pointer" title="Chạm để tạm dừng / tiếp tục">${fmt(G.t)}</div>
+   <p class="s" style="margin-top:-8px;font-size:12px;opacity:.7" id="pause-hint">${G.paused?'⏸ Đang tạm dừng (chạm để tiếp tục)':'Chạm vào giờ để tạm dừng'}</p>
+   <button class="big" onclick="vote()">Bỏ phiếu loại người</button>
+   <button class="big ghost" onclick="setup()">Ván mới</button>
+  </div>`);
+ }
+ renderTimerUI();
+ clearInterval(tick);
+ tick=setInterval(()=>{
+  if(G&&!G.paused&&G.t>0){
+   G.t--;
+   const e=document.getElementById('t');
+   if(e){e.textContent=fmt(G.t);e.classList.toggle('low',G.t<=30)}
+   if(G.t<=0)clearInterval(tick);
+  }
+ },1000);
+}
+function togglePause(){
+ if(!G)return;
+ G.paused=!G.paused;
+ const e=document.getElementById('t'),h=document.getElementById('pause-hint');
+ if(h)h.textContent=G.paused?'⏸ Đang tạm dừng (chạm để tiếp tục)':'Chạm vào giờ để tạm dừng';
+ if(e)e.style.opacity=G.paused?'.5':'1';
+}
+let T=[];
+try{T=JSON.parse(localStorage.getItem('imposter_scores_lite')||'[]')}catch(e){}
+function saveT(){try{localStorage.setItem('imposter_scores_lite',JSON.stringify(T))}catch(e){}}
+const aliveIdx=()=>G.roles.map((r,i)=>i).filter(i=>G.alive[i]);
+function vote(){
+ clearInterval(tick);
+ $(`<div class="stage"><p class="s">Nhóm chọn người bị loại (còn ${aliveIdx().length} người)</p>
+ <div class="names">${aliveIdx().map(i=>`<button class="chip" onclick="pick(${i})">Người chơi ${i+1}</button>`).join('')}</div>
+ <button class="big ghost" onclick="discuss()" style="margin-top:8px">Quay lại thảo luận</button></div>`);
+}
+function pick(i){
+ G.alive[i]=false;
+ if(G.roles[i]===3)G.got[i]+=3;
+ if(G.roles[i]!==1)return after(i,false);
+ $(`<div class="stage"><p class="s">Người chơi ${i+1} là kẻ giả mạo. Họ đoán từ bí mật có đúng không?</p>
+ <button class="big" onclick="after(${i},true)">Đoán đúng (+2)</button>
+ <button class="big ghost" onclick="after(${i},false)">Đoán sai</button></div>`);
+}
+function after(i,g){
+ if(g)G.got[i]+=2;
+ const a=aliveIdx(),imp=a.filter(j=>G.roles[j]===1).length;
+ if(imp===0||imp>=a.length-imp)return end(imp===0?'dan':'imp');
+ G.first=rnd(a);
+ G.t=S.n*60;
+ $(`<div class="stage"><p class="s">Người chơi ${i+1} bị loại</p>
+ <div class="word" style="font-size:30px">${G.roles[i]===1?'Là kẻ giả mạo!':G.roles[i]===3?'Là kẻ nói dối (thắng +3đ)!':'Không phải kẻ giả mạo'}</div>
+ <p class="s">Còn ${a.length} người, trong đó ${imp} kẻ giả mạo.</p>
+ <button class="big" onclick="discuss()">Thảo luận vòng tiếp</button></div>`);
+}
+function end(w){
+ clearInterval(tick);
+ const d=G.roles.map((r,i)=>{
+  let p=G.got[i];
+  if(r===0&&w==='dan')p+=2;
+  if(r===1&&w==='imp'&&G.alive[i])p+=3;
+  if(r===2&&G.alive[i])p+=3;
+  return p;
+ });
+ T=Array.from({length:S.n},(_,i)=>T[i]||0);
+ d.forEach((v,i)=>T[i]+=v);
+ saveT();
+ $(`<div class="stage">
+  <p class="s">${w==='dan'?'Phe dân thắng: đã loại hết kẻ giả mạo':'Kẻ giả mạo thắng'}</p>
+  <p class="s">Từ bí mật (${G.cat})</p><div class="word">${G.word}</div>
+  <div class="names">${G.roles.map((r,i)=>`<div class="row r${r}"><span>Người chơi ${i+1}</span><span>${['Dân thường','Kẻ giả mạo','Gián điệp ('+G.syn+')','Kẻ nói dối'][r]}${G.alive[i]?'':' (bị loại)'} · <b>+${d[i]} = ${T[i]}</b></span></div>`).join('')}</div>
+  <button class="big" onclick="start()">Chơi tiếp, từ mới</button>
+  <button class="big ghost" onclick="setup()">Đổi cài đặt</button>
+  <button class="big ghost" onclick="T=[];saveT();setup()">Xóa điểm</button>
+ </div>`);
+}
+setup();
+</script>
+</body>
+</html>
